@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { GamesList } from './components/GamesList';
+import { GameDetail } from './components/GameDetail';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const queryClient = new QueryClient();
+
+const App = () => {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <div className='container'>
+                <Routes>
+                    <Route path='/' element={<GamesList />} />
+                    <Route path='/:gameId' element={<GameDetail />} />
+                </Routes>
+                <ReactQueryDevtools />
+            </div>
+        </QueryClientProvider>
+    );
+};
 
 export default App;
