@@ -5,33 +5,45 @@ import {
     ListItemIcon,
     ListItemText,
 } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import ListContext from '../context/ListContext';
+import { Game } from '../types/game';
 
 type GamesListItemProps = {
-    game: any;
+    game: Game;
 };
 
 export const GamesListItem = (props: GamesListItemProps) => {
     const { game } = props;
 
+    const { games, addItem, removeItem } = useContext(ListContext);
+
     return (
-        <a href={`/${game.id}`}>
-            <ListItem className='list-hover'>
-                <ListItemButton role={undefined} onClick={() => {}} dense>
-                    <ListItemIcon>
-                        <Checkbox
-                            edge='start'
-                            checked={false}
-                            tabIndex={-1}
-                            disableRipple
-                        />
-                    </ListItemIcon>
+        <ListItem className='list-hover'>
+            <ListItemButton role={undefined} onClick={() => {}} dense>
+                <ListItemIcon>
+                    <Checkbox
+                        edge='start'
+                        checked={games.includes(game.id)}
+                        tabIndex={-1}
+                        disableRipple
+                        onChange={() => {
+                            if (games.includes(game.id)) {
+                                removeItem(game);
+                                return;
+                            }
+                            addItem(game);
+                        }}
+                    />
+                </ListItemIcon>
+                <NavLink to={`/${game.id}`}>
                     <ListItemText
                         primary={`${game.home_team.full_name} - ${game.visitor_team.full_name}`}
                         secondary={new Date(game.date).toLocaleDateString()}
                     />
-                </ListItemButton>
-            </ListItem>
-        </a>
+                </NavLink>
+            </ListItemButton>
+        </ListItem>
     );
 };
