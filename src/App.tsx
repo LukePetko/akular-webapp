@@ -1,6 +1,5 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { GamesList } from './components/GamesList';
@@ -18,7 +17,6 @@ const App = () => {
                         <Route path='/' element={<GamesList />} />
                         <Route path='/:gameId' element={<GameDetail />} />
                     </Routes>
-                    <ReactQueryDevtools />
                 </div>
             </ListProvider>
         </QueryClientProvider>
